@@ -1,0 +1,22 @@
+!pip install openai
+#https://platform.openai.com 在這裡註冊 chat gpt >person >view api >複製自己的api (免費token 只有18塊錢)
+import openai
+openai.api_key = "你的api"
+messages = [{"role":"system", "content":"人物設定"}]#這裡設置你的人物設定
+# messages 會是一個字典格式
+#腳色有三種(system user asystem) system是人設的設定
+
+while True:
+    prompt = input('> ')
+    if 'bye' in prompt:
+        print('再見, 下次再聊!')
+        break
+    messages.append({"role": "user", "content": prompt})
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",  # chat gpt的model
+        messages=messages)
+    reply = response['choices'][0]['message']["content"]
+    print(reply)
+    print()
+    messages.append({"role": "assistant", "content": reply})
+    
